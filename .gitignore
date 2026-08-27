@@ -1,0 +1,46 @@
+# =================================================================
+# CodeIgniter 4 - Configuración de entorno
+# =================================================================
+
+# Archivo de configuración de entorno (contiene credenciales de BD, etc.)
+env
+.env
+*.env
+
+# =================================================================
+# Dependencias
+# =================================================================
+/vendor/
+
+# =================================================================
+# Directorio writeable (datos de ejecución: logs, cache, sesiones, uploads)
+# Se ignoran los contenidos pero se conservan los archivos base (.htaccess / index.html)
+/writable/cache/*
+/writable/debugbar/*
+/writable/logs/*
+/writable/session/*
+/writable/uploads/*
+!.htaccess
+!index.html
+/writable/*.log
+
+# =================================================================
+# Tests
+# =================================================================
+/build/
+/tests/_support/_generated/
+
+# =================================================================
+# Editor / IDE / SO
+# =================================================================
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# =================================================================
+# Logs y temporales
+# =================================================================
+*.log
+tmp/

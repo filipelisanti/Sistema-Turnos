@@ -1,0 +1,101 @@
+:root {
+    --gris-claro: #A5A8AF;
+    --verde-oliva: #716C59;
+    --beige: #AEA897;
+    --negro: #0B0B09;
+    --marrón: #6F5F48;
+}
+
+/* ===== Tabla de disponibilidad (calendario del día) ===== */
+#tabla-horarios {
+    width: 100%;
+    max-width: 480px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#tabla-horarios thead th {
+    background-color: var(--marrón);
+    color: #ffffff;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+
+#tabla-horarios td {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--gris-claro);
+    font-size: 0.95rem;
+}
+
+/* Horas disponibles */
+#tabla-horarios tr.libre td {
+    background-color: #f0f5e9;
+    color: #3f6b2f;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+#tabla-horarios tr.libre:hover td {
+    background-color: #dce8cd;
+}
+
+/* Horas ocupadas */
+#tabla-horarios tr.ocupada td {
+    background-color: #f2dcdb;
+    color: #a94442;
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+/* Hora seleccionada */
+#tabla-horarios tr.seleccionada td {
+    background-color: var(--verde-oliva);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.hora-rango {
+    font-weight: 700;
+}
+
+/* ===== Detalle de turno (show) ===== */
+.detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.detalle-item {
+    background-color: #f4f4f1;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--marrón);
+}
+
+.detalle-item .etiqueta {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--marrón);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.detalle-item .valor {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--negro);
+}
+
+@media (max-width: 600px) {
+    .detalle-grid { grid-template-columns: 1fr; }
+}
