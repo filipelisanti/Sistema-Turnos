@@ -19,14 +19,21 @@ class TurnoController extends BaseController
     }
 
     /**
-     * Lista todos los turnos.
+     * Lista los turnos del barbero logueado.
      */
     public function index()
     {
+        $profesionalId = (int) session()->get('profesional_id');
+
+        if ($profesionalId <= 0) {
+            return redirect()->to('/login');
+        }
+
         $data['turnos'] = $this->turnoModel
             ->select('turnos.*, u.nombre as usuario_nombre, p.nombre as profesional_nombre')
             ->join('usuarios u', 'u.id = turnos.usuario_id')
             ->join('profesionales p', 'p.id = turnos.profesional_id')
+            ->where('turnos.profesional_id', $profesionalId)
             ->orderBy('turnos.fecha', 'ASC')
             ->orderBy('turnos.hora_inicio', 'ASC')
             ->findAll();
@@ -83,7 +90,11 @@ class TurnoController extends BaseController
      */
     public function delete(int $id)
     {
-        if ($this->turnoModel->find($id) === null) {
+        $turno = $this->turnoPropio($id);
+        if ($turno === 'redirect') {
+            return redirect()->to('/login');
+        }
+        if ($turno === null) {
             return redirect()->back()->with('error', 'El turno no existe.');
         }
 
@@ -100,11 +111,11 @@ class TurnoController extends BaseController
      */
     public function show(int $id)
     {
-        $turno = $this->turnoModel
-            ->select('turnos.*, u.nombre as usuario_nombre, p.nombre as profesional_nombre')
-            ->join('usuarios u', 'u.id = turnos.usuario_id')
-            ->join('profesionales p', 'p.id = turnos.profesional_id')
-            ->find($id);
+        $turno = $this->turnoPropio($id);
+
+        if ($turno === 'redirect') {
+            return redirect()->to('/login');
+        }
 
         if ($turno === null) {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
@@ -118,6 +129,14 @@ class TurnoController extends BaseController
      */
     public function cancelar(int $id)
     {
+        $turno = $this->turnoPropio($id);
+        if ($turno === 'redirect') {
+            return redirect()->to('/login');
+        }
+        if ($turno === null) {
+            return redirect()->back()->with('error', 'El turno no existe.');
+        }
+
         try {
             $this->turnoService->cancelarTurno($id);
             return redirect()->to('/turnos')->with('mensaje', 'Turno cancelado.');
@@ -131,6 +150,14 @@ class TurnoController extends BaseController
      */
     public function confirmar(int $id)
     {
+        $turno = $this->turnoPropio($id);
+        if ($turno === 'redirect') {
+            return redirect()->to('/login');
+        }
+        if ($turno === null) {
+            return redirect()->back()->with('error', 'El turno no existe.');
+        }
+
         try {
             $this->turnoService->confirmarTurno($id);
             return redirect()->to('/turnos')->with('mensaje', 'Turno confirmado.');
@@ -144,11 +171,42 @@ class TurnoController extends BaseController
      */
     public function completar(int $id)
     {
+        $turno = $this->turnoPropio($id);
+        if ($turno === 'redirect') {
+            return redirect()->to('/login');
+        }
+        if ($turno === null) {
+            return redirect()->back()->with('error', 'El turno no existe.');
+        }
+
         try {
             $this->turnoService->completarTurno($id);
             return redirect()->to('/turnos')->with('mensaje', 'Turno completado.');
         } catch (RuntimeException $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    /**
+     * Devuelve el turno si existe y pertenece al barbero logueado.
+     * Devuelve la cadena 'redirect' si no hay sesión, o null si no aplica.
+     */
+    private function turnoPropio(int $id)
+    {
+        $profesionalId = (int) session()->get('profesional_id');
+
+        if ($profesionalId <= 0) {
+            return 'redirect';
+        }
+
+        $turno = $this->turnoModel
+            ->select('turnos.*, u.nombre as usuario_nombre, p.nombre as profesional_nombre')
+            ->join('usuarios u', 'u.id = turnos.usuario_id')
+            ->join('profesionales p', 'p.id = turnos.profesional_id')
+            ->where('turnos.id', $id)
+            ->where('turnos.profesional_id', $profesionalId)
+            ->first();
+
+        return $turno ?: null;
     }
 }
