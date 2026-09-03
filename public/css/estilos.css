@@ -121,6 +121,46 @@ a:hover {
     text-decoration: none;
 }
 
+/* ===== Navegación del barbero logueado ===== */
+.nav-usuario {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.nav-usuario-link {
+    color: var(--beige);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-usuario-link:hover {
+    background-color: var(--marrón);
+    color: var(--negro);
+    text-decoration: none;
+}
+
+.nav-usuario-nombre {
+    color: var(--beige);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-left: 2px solid var(--marrón);
+    padding-left: 0.8rem;
+}
+
+.nav-usuario-salir {
+    background-color: #b33933;
+    color: #ffffff;
+}
+
+.nav-usuario-salir:hover {
+    background-color: #8f2620;
+    color: #ffffff;
+}
+
 /* ===== Footer ===== */
 .footer {
     width: 100%;
@@ -307,8 +347,13 @@ tbody tr:hover {
     margin-top: 0.5rem;
 }
 
-/* ===== Detalle (show) ===== */
-.detail-card {
+.opcional {
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: var(--marrón);
+}
+
+/* ===== Detalle (show) ===== */.detail-card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
@@ -330,5 +375,7 @@ tbody tr:hover {
     .header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
     .dropdown-boton { width: 100%; }
     .dropdown-menu { right: auto; left: 0; min-width: 100%; }
+    .nav-usuario { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .nav-usuario-nombre { border-left: none; padding-left: 0; }
     .container { padding: 1rem; }
 }

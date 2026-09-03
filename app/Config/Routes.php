@@ -7,6 +7,12 @@ $routes->get('/', 'Home::index');
 $routes->get('inicio', 'Home::inicio');
 $routes->get('quienes-somos', 'Home::quienes_somos');
 
+$routes->get('login', 'AuthController::login');
+$routes->post('login', 'AuthController::procesarLogin');
+$routes->get('logout', 'AuthController::logout');
+$routes->get('mi-cuenta', 'ProfesionalController::miCuenta');
+$routes->post('mi-cuenta/actualizar', 'ProfesionalController::actualizarMiCuenta');
+
 $routes->get('turnos', 'TurnoController::index');
 $routes->get('turnos/nuevo', 'TurnoController::new');
 $routes->post('turnos', 'TurnoController::create');

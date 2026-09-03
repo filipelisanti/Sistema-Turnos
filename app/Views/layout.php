@@ -11,16 +11,26 @@
     <header class="header">
         <a class="header-marca" href="<?= site_url('inicio') ?>">Barbería Corte Top</a>
 
-        <nav class="dropdown">
-            <button class="dropdown-boton" type="button" id="menuBoton" aria-haspopup="true" aria-expanded="false">
-                Menú
-            </button>
-            <ul class="dropdown-menu" id="menuDesplegable">
-                <li><a class="dropdown-item" href="<?= site_url('inicio') ?>">Inicio</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('quienes-somos') ?>">Quiénes somos</a></li>
-                <li><a class="dropdown-item" href="<?= site_url('turnos/nuevo') ?>">Solicitar Nuevo Turno</a></li>
-            </ul>
-        </nav>
+        <?php if (session()->get('profesional_id')): ?>
+            <nav class="nav-usuario">
+                <a class="nav-usuario-link" href="<?= site_url('turnos') ?>">Lista de turnos</a>
+                <a class="nav-usuario-link" href="<?= site_url('mi-cuenta') ?>">Mi cuenta</a>
+                <span class="nav-usuario-nombre"><?= esc(session()->get('profesional_nombre')) ?></span>
+                <a class="nav-usuario-link nav-usuario-salir" href="<?= site_url('logout') ?>">Cerrar sesión</a>
+            </nav>
+        <?php else: ?>
+            <nav class="dropdown">
+                <button class="dropdown-boton" type="button" id="menuBoton" aria-haspopup="true" aria-expanded="false">
+                    Menú
+                </button>
+                <ul class="dropdown-menu" id="menuDesplegable">
+                    <li><a class="dropdown-item" href="<?= site_url('inicio') ?>">Inicio</a></li>
+                    <li><a class="dropdown-item" href="<?= site_url('quienes-somos') ?>">Quiénes somos</a></li>
+                    <li><a class="dropdown-item" href="<?= site_url('turnos/nuevo') ?>">Solicitar Nuevo Turno</a></li>
+                    <li><a class="dropdown-item" href="<?= site_url('login') ?>">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        <?php endif; ?>
     </header>
 
     <main class="contenido">
