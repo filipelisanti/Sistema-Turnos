@@ -4,19 +4,8 @@ use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
 $routes->get('/', 'Home::index');
-
-/*
-GET    /turnos              -> TurnoController::index
-GET    /turnos/nuevo        -> TurnoController::new
-POST   /turnos              -> TurnoController::create
-GET    /turnos/(:num)       -> TurnoController::show/$1
-POST   /turnos/(:num)/cancelar -> TurnoController::cancelar/$1
-*/
-
-/*
- * Rutas para el controlador TestController
- */
-//$routes->get('test/insertar', 'TestController::insertar');
+$routes->get('inicio', 'Home::inicio');
+$routes->get('quienes-somos', 'Home::quienes_somos');
 
 $routes->get('turnos', 'TurnoController::index');
 $routes->get('turnos/nuevo', 'TurnoController::new');
